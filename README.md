@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # codeintel-Dead-Code-Finder
 Identifies and reports potentially unused code blocks or variables within a project. Useful for code cleanup and reducing attack surface. - Focused on Tools for static code analysis, vulnerability scanning, and code quality assurance
 

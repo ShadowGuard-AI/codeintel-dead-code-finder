@@ -1,4 +1,6 @@
-bandit>=1.0.0
-flake8>=1.0.0
-pylint>=1.0.0
-pyre-check>=1.0.0
+# main.py itself uses only the Python standard library. The packages
+# below are the external tools main.py invokes by name when selected
+# with --dependencies.
+flake8
+pylint
+pyre-check

@@ -173,6 +173,7 @@ def main():
             logging.info(f"Results saved to '{output_file}'")
         except Exception as e:
             logging.error(f"Error writing to file '{output_file}': {e}")
+            sys.exit(1)
     else:
         print(output)
 

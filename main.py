@@ -52,14 +52,14 @@ def run_flake8(project_path, ignore):
         if ignore:
             command.extend(["--exclude", ",".join(ignore)])
         result = subprocess.run(command, capture_output=True, text=True, check=False)
-        return result.stdout
+        return result.stdout, True
 
     except FileNotFoundError:
         logging.error("Flake8 is not installed. Please install it using 'pip install flake8'.")
-        return ""
+        return "", False
     except Exception as e:
         logging.error(f"An error occurred while running flake8: {e}")
-        return ""
+        return "", False
 
 
 def run_pylint(project_path, ignore):
@@ -80,14 +80,14 @@ def run_pylint(project_path, ignore):
             command.extend(["--ignore", ignore_str])
 
         result = subprocess.run(command, capture_output=True, text=True, check=False)
-        return result.stdout
+        return result.stdout, True
 
     except FileNotFoundError:
         logging.error("Pylint is not installed. Please install it using 'pip install pylint'.")
-        return ""
+        return "", False
     except Exception as e:
         logging.error(f"An error occurred while running pylint: {e}")
-        return ""
+        return "", False
 
 
 def run_pyre(project_path, ignore):
@@ -117,14 +117,14 @@ def run_pyre(project_path, ignore):
             command = ["pyre", "check", "--source-directory", project_path, "--configuration", pyre_config_path]
 
             result = subprocess.run(command, capture_output=True, text=True, check=False, cwd=project_path)
-            return result.stdout
+            return result.stdout, True
 
     except FileNotFoundError:
         logging.error("Pyre-check is not installed. Please install it using 'pip install pyre-check'.")
-        return ""
+        return "", False
     except Exception as e:
         logging.error(f"An error occurred while running pyre-check: {e}")
-        return ""
+        return "", False
 
 
 def main():
@@ -151,16 +151,23 @@ def main():
             sys.exit(1)
 
     results = {}
+    failed_tools = []
 
     if "flake8" in dependencies:
         logging.info("Running flake8...")
-        results["flake8"] = run_flake8(project_path, ignore)
+        results["flake8"], ok = run_flake8(project_path, ignore)
+        if not ok:
+            failed_tools.append("flake8")
     if "pylint" in dependencies:
         logging.info("Running pylint...")
-        results["pylint"] = run_pylint(project_path, ignore)
+        results["pylint"], ok = run_pylint(project_path, ignore)
+        if not ok:
+            failed_tools.append("pylint")
     if "pyre-check" in dependencies:
         logging.info("Running pyre-check...")
-        results["pyre-check"] = run_pyre(project_path, ignore)
+        results["pyre-check"], ok = run_pyre(project_path, ignore)
+        if not ok:
+            failed_tools.append("pyre-check")
 
     output = ""
     for tool, result in results.items():
@@ -176,6 +183,10 @@ def main():
             sys.exit(1)
     else:
         print(output)
+
+    if failed_tools:
+        logging.error(f"Tools that did not run: {', '.join(failed_tools)}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

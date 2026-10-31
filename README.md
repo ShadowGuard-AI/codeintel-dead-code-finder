@@ -3,6 +3,8 @@
 # codeintel-Dead-Code-Finder
 Identifies and reports potentially unused code blocks or variables within a project. Useful for code cleanup and reducing attack surface. - Focused on Tools for static code analysis, vulnerability scanning, and code quality assurance
 
+If any selected tool is missing or fails to run, the run exits 1 and names that tool. An exit 0 run means every selected tool ran.
+
 ## Install
 `git clone https://github.com/ShadowStrikeHQ/codeintel-dead-code-finder`
 

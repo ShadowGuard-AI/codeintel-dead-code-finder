@@ -50,6 +50,9 @@ def run_flake8(project_path, ignore):
     try:
         command = ["flake8", project_path]
         if ignore:
+            # I return success for flake8 as long as the process started.
+            # Its exit code is ignored, so a run full of findings and a
+            # clean run both come back True, and only the output differs.
             command.extend(["--exclude", ",".join(ignore)])
         result = subprocess.run(command, capture_output=True, text=True, check=False)
         return result.stdout, True
@@ -106,6 +109,10 @@ def run_pyre(project_path, ignore):
             pyre_config_path = os.path.join(temp_dir, ".pyre_configuration.local")
 
             # Create .pyre_configuration.local file with excludes
+            # I build the pyre config as text in the next write, with the
+            # paths interpolated straight into the JSON. A project path
+            # containing a quote would break that JSON, and the failure
+            # would surface as a pyre error, not a config error.
             with open(pyre_config_path, "w") as f:
                 f.write(f"""{{
   "ignore": [{", ".join(map(lambda x: '"' + x + '"', ignore))}],
@@ -171,6 +178,9 @@ def main():
 
     output = ""
     for tool, result in results.items():
+        # I print a section for every tool that ran, even when its
+        # output is empty. An empty section means the tool found
+        # nothing to print, which is not the same as the tool missing.
         output += f"--- {tool.upper()} ---\n{result}\n\n"
 
     if output_file:

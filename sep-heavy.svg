@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 40" role="img" aria-label="Major separator: a rope line tying and untying a sailor's knot across the full rule from left to right, rope gold on midnight navy">
+<rect x="0" y="0" width="1200" height="40" fill="#14243e"/>
+<line x1="0" y1="20" x2="1200" y2="20" stroke="#c9a227" stroke-width="3"/>
+<g><circle cx="170" cy="20" r="9" fill="none" stroke="#c9a227" stroke-width="3"><animate attributeName="r" values="9;6;9" dur="8s" begin="0.0s" repeatCount="indefinite"/></circle></g><g><circle cx="420" cy="20" r="9" fill="none" stroke="#c9a227" stroke-width="3"><animate attributeName="r" values="9;6;9" dur="8s" begin="1.3s" repeatCount="indefinite"/></circle></g><g><circle cx="670" cy="20" r="9" fill="none" stroke="#c9a227" stroke-width="3"><animate attributeName="r" values="9;6;9" dur="8s" begin="2.6s" repeatCount="indefinite"/></circle></g><g><circle cx="920" cy="20" r="9" fill="none" stroke="#c9a227" stroke-width="3"><animate attributeName="r" values="9;6;9" dur="8s" begin="3.9s" repeatCount="indefinite"/></circle></g>
+</svg>
